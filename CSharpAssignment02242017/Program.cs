@@ -145,7 +145,46 @@ namespace CSharpAssignment02242017
 
         public class Octagon
         {
-            
+            public double SideLength { get; set; }
+
+            public double GetArea()
+            {
+                double area = 2 * (1 + Math.Sqrt(2)) * (SideLength * SideLength);
+                return area;
+            }
+
+            public Octagon(double sidelength)
+            {
+                SideLength = sidelength;
+            }
+
+            public void Display()
+            {
+                WriteLine("Side Length is {0}", SideLength);
+                WriteLine("Area is {0}", GetArea());
+            }
+
+            public void AcceptDetails()
+            {
+                WriteLine("The side length is {0}", SideLength);
+                WriteLine("Do you accept the details? Enter Y for yes or N for no.");
+                
+                var answer = ReadLine().ToLower();
+                if (answer == "y")
+                {
+                    WriteLine("Thank you! Octagon saved.");
+                }
+                else if (answer == "n")
+                {
+                    WriteLine("Please reenter the side length: ");
+                    SideLength = Convert.ToDouble(ReadLine());
+                }
+                else
+                {
+                    WriteLine("Invalid response. Please try again.");
+                    AcceptDetails();
+                }
+            }
         }
 
         public class Square
@@ -226,27 +265,62 @@ namespace CSharpAssignment02242017
             public static void MainMenu()
             {
                 WriteLine("Welcome to the Math assignment in C Sharp!");
-                WriteLine("Enter 1 to build a rectangle, 2 for a square, 3 for a triangle, 4 for an octogon or 5 for a times table.");
+                WriteLine("Enter 1 to build a rectangle, 2 for a square, 3 for a triangle, 4 for an octagon or 5 for a times table.");
+                WriteLine("Or enter 0 to exit.");
                 var answer = ReadLine();
-                if (answer == "1")
+                if (answer == "0")
+                {
+                    WriteLine("Goodbye!");
+                    Environment.Exit(0);
+                }
+                else if (answer == "1")
                 {
                     WriteLine("Enter the length of your rectangle: ");
-                    var length = Convert.ToDouble(ReadLine());
+                    double length = 0;
+                    double width = 0;
+                    try
+                    {
+                        length = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error! Invalid value. Going back to main menu...");
+                        Menu.MainMenu();
+                    }
                     WriteLine("Enter the width of your rectangle: ");
-                    var width = Convert.ToDouble(ReadLine());
+                    try
+                    {
+                        width = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error! Invalid value. Going back to main menu...");
+                        Menu.MainMenu();
+                    }
 
                     Rectangle rectangle = new Rectangle(length, width);
 
                     WriteLine("The area of your rectangle is " + rectangle.GetArea());
                     rectangle.AcceptDetails();
                     rectangle.Display();
+                    Menu.MainMenu();
 
 
                 }
                 else if (answer == "2")
                 {
                     WriteLine("Enter the length and width of your square: ");
-                    var length = Convert.ToDouble(ReadLine());
+                    double length = 0;
+                    try
+                    {
+                        length = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error. Invalid value specified. Returning to main menu...");
+                        Menu.MainMenu();
+                    }
+
                     var width = length;
 
                     Square square = new Square(length, width);
@@ -254,30 +328,75 @@ namespace CSharpAssignment02242017
                     WriteLine("The area of your rectangle is " + square.GetArea());
                     square.AcceptDetails();
                     square.Display();
+                    Menu.MainMenu();
                 }
                 else if (answer == "3")
                 {
                     WriteLine("Enter the length of your triangle: ");
-                    var length = Convert.ToDouble(ReadLine());
+                    double length = 0;
+                    double width = 0;
+                    try
+                    {
+                        length = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error! Invalid value. Going back to main menu...");
+                        Menu.MainMenu();
+                    }
                     WriteLine("Enter the width of your triangle: ");
-                    var width = Convert.ToDouble(ReadLine());
+                    try
+                    {
+                        width = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error! Invalid value. Going back to main menu...");
+                        Menu.MainMenu();
+                    }
 
                     Triangle triangle = new Triangle(length, width);
 
                     WriteLine("The area of your triangle is " + triangle.GetArea());
                     triangle.AcceptDetails();
                     triangle.Display();
+                    Menu.MainMenu();
                 }
                 else if (answer == "4")
                 {
-                    WriteLine("Hey look an octagon!");
+                    WriteLine("Enter the side length of your octagon: ");
+                    double sidelength = 0;
+                    try
+                    {
+                        sidelength = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        WriteLine("Error! Invalid value. Going back to main menu...");
+                        Menu.MainMenu();
+                    }
+
+                    Octagon octagon = new Octagon(sidelength);
+
+                    octagon.AcceptDetails();
+                    octagon.Display();
+                    Menu.MainMenu();
                 }
                 else if (answer == "5")
                 {
                     WriteLine("Please enter your value for a times table.");
-                    var value = Convert.ToDouble(ReadLine());
+                    double value = 0;
+                    try
+                    {
+                        value = Convert.ToDouble(ReadLine());
+                    }
+                    catch (SystemException ex)
+                    {
+                        
+                    }
                     TimesTable table = new TimesTable(value);
                     table.Display();
+                    Menu.MainMenu();
                 }
                 else
                 {
